@@ -1,0 +1,6 @@
+// Ahmad alaradi
+// 04-02-2024
+
+this folder contains the php code for the log system for my page, which take the inputs and compare
+it with the data in the database to see if the user signed up in the website or not 
++ other functionalities + css file for the page

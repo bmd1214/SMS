@@ -1,0 +1,5 @@
+// Ahmad alaradi
+// 04-02-2024
+
+this folder includes the php code that i have designed for the add post
+system to my website + the css file for the page
