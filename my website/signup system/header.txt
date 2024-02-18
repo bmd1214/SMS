@@ -1,5 +1,0 @@
-// Ahmad alaradi
-// 04-02-2024
-
-this folder contains the code for signing up system for my website, includes the file 
-that has the database connection + css file for the page

@@ -1,5 +1,0 @@
-// Ahmad alaradi
-// 04-02-2024
-
-this folder contains the home page with some php code for the session
-to show it in the top of the home page + the css file for the home page
