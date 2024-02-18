@@ -1,4 +1,0 @@
-// Ahmad alaradi
-// 04-02-2024
-
-this folder contains the appropiate php code for loging out of the website.
