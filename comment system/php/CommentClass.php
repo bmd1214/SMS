@@ -4,7 +4,9 @@ namespace MyNamespace;
 
 use DataBaseConnection;
 use Exception;
+use Validation;
 
+require_once 'Validation.php';
 require_once '../../DataBaseConnection/DataBaseConnection.php';
 
 class Comment{
@@ -14,12 +16,20 @@ class Comment{
 
         $this->comment = $comment;
 
-        $this->insertComment($userName, $postId);
+        // check comment before procced
+        try{
+            Validation::validateComment($comment);
+        }catch(Exception $e){
+            echo $e->getMessage();
+            exit;
+        }
+
+        $this->insertComment($userName, $postId); // insert the comment from the constructor
     }
     public function display(){
         print "comment: " . $this->comment . '<br>';
     }
-
+    // function to insert the comment
     public function insertComment($userName, $postId){
         $conn = new DataBaseConnection();
         $userId = Comment::getUserId($userName);
@@ -29,11 +39,11 @@ class Comment{
         VALUES ('$userId', '$postId', '$this->comment', '$date')");
 
         if(!$query){
-            throw new Exception('Something Wrong happend');
+            throw new Exception("could not post the comment!");
         }
 
     }
-
+    // function returns the user id to associate it with comment
     public static function getUserId($userName){
         $conn = new DataBaseConnection();
 
@@ -42,10 +52,10 @@ class Comment{
 
         $result = mysqli_fetch_assoc($query);
 
+        // check if the result not empty
         if($result){
             return $result['user_id'];
         }
-
     }
     
 }

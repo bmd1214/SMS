@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="navdiv">
             <div class="logo">Mingle!</div>
             <ul>
-                <li><a href="../../log in system/php/login-interface.php" target="_blank"><button>Log in</button></a></li>
+                <li><a href="../../log in system/php/login-interface.php" target="_self"><button>Log in</button></a></li>
                 <li><a href="#" ><button>About Us</button></a></li>
             </ul>
         </div>

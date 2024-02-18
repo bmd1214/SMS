@@ -27,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // inserting data in the table post and sending the user id
     $newPost->insertPost($userId);
+
+    header('Location: ../../homePage/php/HomePage.php');
 }
 ?>
 

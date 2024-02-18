@@ -3,7 +3,7 @@ use MyNamespace\Comment;
 require_once 'CommentClass.php';
 session_start();
 
-// Check if the user is not logged in, redirect to the login page
+// check if the user is not logged in, redirect to the login page
 if (!isset($_SESSION['userName'])) {
     header("Location: ../../../Assignment 3/log in system/php/");
     
@@ -11,7 +11,7 @@ if (!isset($_SESSION['userName'])) {
 }
 
 $userName = $_SESSION['userName'];
-$postId = $_GET['postId'];
+$postId = $_GET['postId']; // getting the post id from page that displays the posts
  
 if(isset($_POST['submit'])){
     
@@ -28,6 +28,7 @@ if(isset($_POST['submit'])){
 
     if (!empty($comment)) {
         try {
+            // create an object for the comment with user and post's ids
             $comm = new Comment($comment, $userName, $postId);
             
         } catch (Exception $e) {
@@ -36,8 +37,8 @@ if(isset($_POST['submit'])){
         }
     }
 
-    // header('Location: ../../post search/postComment.php');
-    // exit;
+     header('Location: ../../post search/php/postComment.php');
+    
 }
 ?>
 

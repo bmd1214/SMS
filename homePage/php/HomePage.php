@@ -51,7 +51,7 @@ if (isset($userId)) {
             <ul>
                 <li><a href="../../signup system/php/editUser.php" target="_Self"><button>edit info</button></a></li>
                 <li><a href="../../add post system/php/editPost.php" target="_Self"><button>edit post</button></a></li>
-                <li><a href="../../post search/php/postComment.php" target="_blank"><button>Posts</button></a></li>
+                <li><a href="../../post search/php/postSearch.php" target="_blank"><button>Posts</button></a></li>
                 <li><a href="../../add post system/php/postPage-interface.php" target="_self"><button>Add Post</button></a></li>
                 <li><a href="#" target="_blank"><button>About Us</button></a></li>
                 <li><a href="../../logout system/logout.php" target="_self"><button>log out</button></a></li>

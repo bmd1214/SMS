@@ -69,7 +69,7 @@ class Post{
                 return $result;
 
             }else{
-                throw new Exception('The post you are searching for does not exist!'); // did not find posts
+                throw new Exception('You do not have any posts!'); // did not find posts
                 }
 
         }

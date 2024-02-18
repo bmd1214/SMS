@@ -4,7 +4,7 @@ require_once 'PostQueries.php';
 
 session_start();
 
-// Check if the user is not logged in, redirect to the login page
+// check if the user is not logged in, redirect to the login page
 if (!isset($_SESSION['userName'])) {
     header("Location: ../../log in system/php/login-interface.php");
     exit();
@@ -17,22 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = $_POST['category'];
     $date = $_POST['date'];
 }
-
+// try to find a post with the inputs name, title, category and date
 try {
     $result = PostQueries::search($name, $title, $category, $date);
 } catch (Exception $e) {
     echo $e->getMessage();
     exit;
 }
-
+// direct the user to page where the posts are displayed
 header('Location: postComment.php');
 
 }
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">

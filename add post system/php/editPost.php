@@ -12,15 +12,15 @@ if(isset($_SESSION['user_id'])) {
 }
 
 try {
-    // Get existing posts data
+    // get existing posts data
     $posts = Post::getPosts($userId);
 
-    // Check if there are existing posts
+    // check if there are existing posts
     if (!empty($posts)) {
-        // Initialize postsHTML to store HTML for posts
+        // this used to store HTML for posts
         $postsHTML = '';
 
-        // Iterate over the posts array
+        // iterate over the posts array
         foreach ($posts as $post) {
             $categoryId = $post['category_id'];
             $postId = $post['post_id'];
@@ -29,7 +29,7 @@ try {
             $date = $post['post_date'];
             $postText = $post['post'];
 
-            // Generate HTML for each post
+            // generate HTML for each post
             $postsHTML .= "
             <div class='formdiv'>
                 <h1>Post</h1>
@@ -59,7 +59,7 @@ try {
             ";
         }
     } else{
-        // If there are no existing posts, initialize postsHTML with a message
+        // If there are no existing posts, add message to postsHTML
         $postsHTML = '<p>No posts found.</p>';
     }
 } catch(Exception $e){
@@ -73,22 +73,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $action = $_POST['action'];
     
         if ($action == 'delete') {
-            // ... code for deleting the post ...
+            //code for deleting the post 
         } elseif ($action == 'submit') {
-            // ... code for submitting the form ...
+            // code for submitting the form 
         }
     if ($_POST['action'] == 'delete') {
-        // If the delete button is pressed, call the static deletePost function
+        // if the delete button is pressed, call the static deletePost function
         $postIdToDelete = $_POST['postId'];
         Post::deletePost($postIdToDelete);
 
-        // Redirect or show a success message as needed
+        // redirect to the home page after deletion
         header("Location: ../../homePage/php/HomePage.php");
         exit;
     }
 }
 
-    // Handle form submission for editing posts
+    // handle form submission for editing posts
     $editedPostId = $_POST['postId'];
     $editedTitle = $_POST['title'];
     $editedCategory = $_POST['category'];

@@ -3,13 +3,14 @@ require_once 'PostQueries.php';
 
 session_start();
 
-$postsHTML = ''; // Initialize an empty string to store HTML for posts
+$postsHTML = ''; // initialize an empty string to store HTML for posts
 
+$userName = $_SESSION['userName'];
 if (isset($_SESSION['search_result'])) {
     $searchResult = $_SESSION['search_result'];
-    $userName = $_SESSION['userName'];
+    
 
-    // Iterate over the search result array
+    // iterate over the search result array
     foreach ($searchResult as $row) {
         $postId = $row['post_id']; 
         $title = $row['title'];
@@ -21,7 +22,7 @@ if (isset($_SESSION['search_result'])) {
 
         $comments = PostQueries::getCommentCount($postId);
 
-        // Generate HTML for each post
+        // generate HTML for each post
         $postsHTML .= "
         <div class='formdiv'>
             <h1>Post</h1>

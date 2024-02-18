@@ -8,12 +8,15 @@ class PostQueries{
 
         $conn = new DataBaseConnection();
 
+        // check if the user entered the title to search with
         if(!(empty($title))){
+
+            // if name or title or category are empty then search with only the title
             if(empty($name) || empty($title) || empty($category)){
                 $title = mysqli_real_escape_string($conn->getConnection(),$title);
 
                 $query = mysqli_query($conn->getConnection(), "SELECT * FROM post WHERE 
-                title='{$title}'");
+                title='{$title}'");  //search with title
 
                 if($query){
                     $result = $query->fetch_all(MYSQLI_ASSOC);
@@ -28,7 +31,7 @@ class PostQueries{
                     }
                 }
             }else{
-
+                // escape against SQLi
                 $title = mysqli_real_escape_string($conn->getConnection(),$title);
 
                 try{
@@ -37,7 +40,7 @@ class PostQueries{
                     echo $e->getMessage();
                     exit;
                 }
-
+                // search using name, category, date and title
                 $query = mysqli_query($conn->getConnection(), "SELECT * FROM post WHERE 
                 user_id='{$userId}' AND category_id='{$category}' AND title='{$title}' AND post_date='{$date}' ");
 
@@ -57,7 +60,7 @@ class PostQueries{
 
         }
     }
-
+    // function returns username to display it with the post
     public static function getUserName($userId){
         $conn = new DataBaseConnection();
 
@@ -69,7 +72,7 @@ class PostQueries{
         return $result['user_name'];
 
     }
-
+    // function returns category to display it with the post
     public static function getCategory($categoryId){
         $conn = new DataBaseConnection();
 
@@ -81,6 +84,7 @@ class PostQueries{
         return $result['category'];
 
     }
+    // function returns user id to search for the post
     public static function getUserId($name){
         $conn = new DataBaseConnection();
 
@@ -96,6 +100,7 @@ class PostQueries{
         }
 
     }
+    // function to get comment count and display it on the post
     public static function getCommentCount($postId){
         
         $conn = new DataBaseConnection();
