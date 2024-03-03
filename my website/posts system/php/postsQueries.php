@@ -40,7 +40,7 @@ class Posts{
 
         if(Posts::checkVote($userId, $postId, $vote)){
             $query = mysqli_query($conn->getConnection(), "INSERT INTO post_vote (user_id, post_id, vote_id) 
-                                    VALUES ('{$userId}','{$postId}','{$vote}') ");
+            VALUES ('{$userId}','{$postId}','{$vote}') ");
         }
 
     }
@@ -63,6 +63,50 @@ class Posts{
 
         }
 
+    }
+    public static function getUpVoteCount($postId){
+
+        $conn = new DataBaseConnection;
+
+        $query = mysqli_query($conn->getConnection(), "SELECT COUNT(*) as up_vote_count FROM post_vote 
+        WHERE post_id = '{$postId}' AND vote_id='1'");
+
+        $result = mysqli_fetch_assoc($query);
+        if(! empty($result)){
+            return $result['up_vote_count'];
+        }else{
+            return 0;
+        }
+
+    }
+    public static function getDownVoteCount($postId){
+
+        $conn = new DataBaseConnection;
+
+        $query = mysqli_query($conn->getConnection(), "SELECT COUNT(*) as down_vote_count FROM post_vote 
+        WHERE post_id = '{$postId}' AND vote_id='2'");
+
+        $result = mysqli_fetch_assoc($query);
+        if(! empty($result)){
+            return $result['down_vote_count'];
+        }else{
+            return 0;
+        }
+
+    }
+    public static function getCommentCount($postId){
+        
+        $conn = new DataBaseConnection();
+        $query = mysqli_query($conn->getConnection(), "SELECT COUNT(*) as comments_count FROM comment WHERE post_id = '{$postId}'");
+
+        
+        $result = mysqli_fetch_assoc($query);
+       
+        if ($result && isset($result['comments_count'])){
+            return $result['comments_count'];
+        }
+        return 0;
+        
     }
 
 }

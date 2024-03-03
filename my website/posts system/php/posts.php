@@ -24,6 +24,9 @@ if(isset($_GET['upvote']) || isset($_GET['downvote'])){
         echo "Can Not Add Vote At The Moment";
     }
 
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+
 
 }
 
@@ -36,6 +39,13 @@ try{
 if(isset ($_SESSION['search_result'])){
     $searchResult = $_SESSION['search_result'];
 
+        // Sort the searchResult array in descending order based on upVote count
+        usort($searchResult, function($a, $b) {
+            $upVotesA = Posts::getUpVoteCount($a['post_id']);
+            $upVotesB = Posts::getUpVoteCount($b['post_id']);
+            return $upVotesB - $upVotesA;
+        });
+
     foreach($searchResult as $row){
         $postId = $row['post_id']; 
         $title = $row['title'];
@@ -43,6 +53,10 @@ if(isset ($_SESSION['search_result'])){
         $date = $row['post_date'];
         $authorName = Posts::getAuthorName($row['user_id']);
         $category = Posts::getCategory($row['category_id']);
+
+        $upVote = Posts::getUpVoteCount($postId);
+        $downVote = Posts::getDownVoteCount($postId);
+        $comments = Posts::getCommentCount($postId);
 
         $postsHTML .= "
         <div class='formdiv'>
@@ -55,8 +69,8 @@ if(isset ($_SESSION['search_result'])){
                 
                 <input class='date' type='hidden' name='postId' value='$postId' readonly>
 
-                <textarea type='text' name='post' readonly>$post</textarea>
-
+                <textarea type='text' name='post' readonly>$post</textarea> <br>
+                <span>&nbsp&nbsp&nbsp&nbsp&nbsp Up Vote:  $upVote &nbsp&nbsp&nbsp  Down Vote:  $downVote &nbsp&nbsp comments: $comments </span>
 
                 <ul>
   
