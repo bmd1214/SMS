@@ -35,6 +35,35 @@ class Posts{
 
         return $result['category'];
     }
+    public static function addVote($userId, $postId, $vote){
+        $conn = new DataBaseConnection;
+
+        if(Posts::checkVote($userId, $postId, $vote)){
+            $query = mysqli_query($conn->getConnection(), "INSERT INTO post_vote (user_id, post_id, vote_id) 
+                                    VALUES ('{$userId}','{$postId}','{$vote}') ");
+        }
+
+    }
+    public static function checkVote($userId, $postId, $vote){
+        $conn = new DataBaseConnection;
+        $query = mysqli_query($conn->getConnection(), "SELECT * FROM post_vote WHERE user_id='{$userId}' AND post_id='{$postId}'");
+
+        if($query){
+            $result = mysqli_fetch_assoc($query);
+            if(!empty($result)){
+                if($result['vote_id'] == $vote){
+                    $query = mysqli_query($conn->getConnection(), "DELETE FROM post_vote WHERE user_id='{$userId}' AND post_id='{$postId}'");
+                }else{
+                    $query = mysqli_query($conn->getConnection(), "UPDATE post_vote SET vote_id='{$vote}' WHERE user_id='{$userId}' AND post_id='{$postId}'");
+                }
+
+            }else{
+                return true;
+            }
+
+        }
+
+    }
 
 }
 

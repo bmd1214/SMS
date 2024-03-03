@@ -7,8 +7,31 @@ session_start();
 $postsHTML = ''; // initiate an empty string
 
 $userName = $_SESSION['userName'];
+$userId = $_SESSION['user_id'];
 
-posts::getPosts();
+if(isset($_GET['upvote']) || isset($_GET['downvote'])){
+
+    $clickedPostId = $_GET['postId'];
+
+    if(isset($_GET['upvote'])){
+        $vote = $_GET['upvote'];
+        Posts::addVote($userId, $clickedPostId, $vote);
+
+    }else if(isset($_GET['downvote'])){
+        $vote = $_GET['downvote'];
+        Posts::addVote($userId, $clickedPostId, $vote);
+    }else{
+        echo "Can Not Add Vote At The Moment";
+    }
+
+
+}
+
+try{
+    posts::getPosts();
+}catch(Exception $e){
+    echo $e->getMessage();
+}
 
 if(isset ($_SESSION['search_result'])){
     $searchResult = $_SESSION['search_result'];
@@ -24,25 +47,26 @@ if(isset ($_SESSION['search_result'])){
         $postsHTML .= "
         <div class='formdiv'>
             <h1>Post</h1>
-            <form action='../../comment system/php/commentpage.php' method='get'>
+            <form action='' method='get'>
                 <label class='option' for=''>Name<input class='name' type='text' value='$authorName' readonly></label><br>
                 <label class='option' for=''>Title<input class='title' type='text'  value='$title' readonly></label><br>
                 <label class='option' for=''>Category<input class='category' value='$category' name='category' type='text' ></label><br>
                 <label class='option' for=''>Date<input class='date' type='text'  value='$date' readonly></label><br>
                 
-                
                 <input class='date' type='hidden' name='postId' value='$postId' readonly>
 
                 <textarea type='text' name='post' readonly>$post</textarea>
 
+
                 <ul>
-                
-                    <li><button class='button2'>UpVote</button></li>
-                    <li><button class='button2'>DownVote</button></li>
-                    <button type='submit' class='button2' name='comment_post_id' value='$postId'>Comment</button>
+  
+                    <li> <button class='button2' name = 'upvote' value='1'>UpVote</button></li>
+                    <li> <button class='button2' name = 'downvote' value='2' >DownVote</button></li>
+                    <button type='submit' class='button2'>Comment</button>
                 
                 </ul>
                 
+                  
             </form>
         </div>
         ";
