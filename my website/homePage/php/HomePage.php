@@ -49,9 +49,10 @@ if (isset($userId)) {
                 <p class="motto">Welcome to Mingle, where friendships kindle</p>
             </div>
             <ul>
-                <li><a href="../../signup system/php/editUser.php" target="_Self"><button>edit info</button></a></li>
-                <li><a href="../../add post system/php/editPost.php" target="_Self"><button>edit post</button></a></li>
-                <li><a href="../../post search/php/postSearch.php" target="_blank"><button>Posts</button></a></li>
+                <li><a href="../../signup system/php/editUser.php" target="_Self"><button>Edit info</button></a></li>
+                <li><a href="../../add post system/php/editPost.php" target="_Self"><button>Edit post</button></a></li>
+                <li><a href="../../posts system/php/posts.php" target="_blank"><button>Posts</button></a></li>
+                <li><a href="../../post search/php/postSearch.php" target="_blank"><button>Serach</button></a></li>
                 <li><a href="../../add post system/php/postPage-interface.php" target="_self"><button>Add Post</button></a></li>
                 <li><a href="#" target="_blank"><button>About Us</button></a></li>
                 <li><a href="../../logout system/logout.php" target="_self"><button>log out</button></a></li>
