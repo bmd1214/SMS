@@ -1,7 +1,7 @@
 <?php
 require_once 'postManager.php';
 
-// Instantiate the class
+// instantiate the class
 $postManager = new PostManager();
 $userName = $postManager->getUserName();
 ?>

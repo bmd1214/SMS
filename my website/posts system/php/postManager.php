@@ -3,7 +3,7 @@
 require_once 'postsQueries.php';
 
 class PostManager {
-
+    //instantiate an empty string to store the posts
     private $postsHTML = '';
     private $userName;
 
@@ -14,23 +14,24 @@ class PostManager {
         $this->generatePostsHTML();
         $this->handleVotes();
     }
-
+    // function gets the posts, sort them then store then in an instance 
     private function generatePostsHTML() {
         try {
             posts::getPosts();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-
+        // get the post in the session array
         if (isset($_SESSION['search_result'])) {
             $searchResult = $_SESSION['search_result'];
-
+            // sort function used to sort the posts based on the up-votes count
             usort($searchResult, function ($a, $b) {
                 $upVotesA = Posts::getUpVoteCount($a['post_id']);
                 $upVotesB = Posts::getUpVoteCount($b['post_id']);
                 return $upVotesB - $upVotesA;
             });
 
+            // add the appropraite values in every post
             foreach ($searchResult as $row) {
                 $postId = $row['post_id'];
                 $title = $row['title'];
@@ -61,7 +62,7 @@ class PostManager {
       
                         <li> <button class='button2' name='upvote' value='1'>UpVote</button></li>
                         <li> <button class='button2' name='downvote' value='2' >DownVote</button></li>
-                        <button type='submit' class='button2'>Comment</button>
+                        <a href='../../comment system/php/commentpage.php' ><button class='button2'>Comment</button></a>
                     
                     </ul>
                     
@@ -71,28 +72,37 @@ class PostManager {
             }
         }
     }
-
+    // function handle the process of voting if the buttons been pressed
     private function handleVotes() {
         if (isset($_GET['upvote']) || isset($_GET['downvote'])) {
             $clickedPostId = $_GET['postId'];
 
-            if (isset($_GET['upvote'])) {
-                $vote = $_GET['upvote'];
-                Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
-            } elseif (isset($_GET['downvote'])) {
-                $vote = $_GET['downvote'];
-                Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
-            } else {
-                echo "Can Not Add Vote At The Moment";
-            }
+            try{
+                // if up-vote button is pressed
+                if (isset($_GET['upvote'])) {
+                    $vote = $_GET['upvote'];
+                    Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
+                // if down-vote button is pressed
+                } elseif (isset($_GET['downvote'])) {
+                    $vote = $_GET['downvote'];
+                    Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
+                } else {
+                    echo "Can Not Add Vote At The Moment";
+                }
+                // stay in the page after voting
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit();
 
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit();
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
         }
     }
+    // returns the user name
     public function getUserName(){
         return $this->userName;
     }
+    // returns the posts after sorting them based on the up-vote count
     public function getPostsHTML() {
         return $this->postsHTML;
     }
