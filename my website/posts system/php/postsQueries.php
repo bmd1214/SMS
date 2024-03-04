@@ -37,10 +37,18 @@ class Posts{
     }
     public static function addVote($userId, $postId, $vote){
         $conn = new DataBaseConnection;
+        try{
+           $conn->getConnection()->begin_transaction();
 
-        if(Posts::checkVote($userId, $postId, $vote)){
-            $query = mysqli_query($conn->getConnection(), "INSERT INTO post_vote (user_id, post_id, vote_id) 
-            VALUES ('{$userId}','{$postId}','{$vote}') ");
+            if(Posts::checkVote($userId, $postId, $vote)){
+                $query = mysqli_query($conn->getConnection(), "INSERT INTO post_vote (user_id, post_id, vote_id) 
+                VALUES ('{$userId}','{$postId}','{$vote}') ");
+
+                $conn->getConnection()->commit();
+            }
+        }catch(Exception $e){
+            $conn->getConnection()->rollback();
+            throw $e;
         }
 
     }
@@ -61,6 +69,8 @@ class Posts{
                 return true;
             }
 
+        }else{
+            throw new Exception("Something Wrong With The DB Connection!");
         }
 
     }
@@ -110,6 +120,5 @@ class Posts{
     }
 
 }
-
 
 ?>
