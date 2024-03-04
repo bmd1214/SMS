@@ -2,7 +2,7 @@
 
 require_once '../../DataBaseConnection/DataBaseConnection.php';
 
-class Posts{
+class PostsQueries{
     // function to return the posts in the dataBase
     public static function getPosts(){
         $conn = new DataBaseConnection;
@@ -46,7 +46,7 @@ class Posts{
            $conn->getConnection()->begin_transaction();
 
             // call a function to check if the post is already been voted by the same user
-            if(Posts::checkVote($userId, $postId, $vote)){
+            if(PostsQueries::checkVote($userId, $postId, $vote)){
                 $query = mysqli_query($conn->getConnection(), "INSERT INTO post_vote (user_id, post_id, vote_id) 
                 VALUES ('{$userId}','{$postId}','{$vote}') ");
 
@@ -99,7 +99,6 @@ class Posts{
         }else{
             return 0;
         }
-
     }
     // function returns the down-vote count
     public static function getDownVoteCount($postId){
@@ -115,7 +114,6 @@ class Posts{
         }else{
             return 0;
         }
-
     }
     // function returns the comments count to show it
     public static function getCommentCount($postId){
@@ -129,7 +127,6 @@ class Posts{
             return $result['comments_count'];
         }
         return 0;
-        
     }
 
 }

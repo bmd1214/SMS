@@ -17,7 +17,7 @@ class PostManager {
     // function gets the posts, sort them then store then in an instance 
     private function generatePostsHTML() {
         try {
-            posts::getPosts();
+            postsQueries::getPosts();
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -26,8 +26,8 @@ class PostManager {
             $searchResult = $_SESSION['search_result'];
             // sort function used to sort the posts based on the up-votes count
             usort($searchResult, function ($a, $b) {
-                $upVotesA = Posts::getUpVoteCount($a['post_id']);
-                $upVotesB = Posts::getUpVoteCount($b['post_id']);
+                $upVotesA = PostsQueries::getUpVoteCount($a['post_id']);
+                $upVotesB = PostsQueries::getUpVoteCount($b['post_id']);
                 return $upVotesB - $upVotesA;
             });
 
@@ -37,12 +37,12 @@ class PostManager {
                 $title = $row['title'];
                 $post = $row['post'];
                 $date = $row['post_date'];
-                $authorName = Posts::getAuthorName($row['user_id']);
-                $category = Posts::getCategory($row['category_id']);
+                $authorName = PostsQueries::getAuthorName($row['user_id']);
+                $category = PostsQueries::getCategory($row['category_id']);
 
-                $upVote = Posts::getUpVoteCount($postId);
-                $downVote = Posts::getDownVoteCount($postId);
-                $comments = Posts::getCommentCount($postId);
+                $upVote = PostsQueries::getUpVoteCount($postId);
+                $downVote = PostsQueries::getDownVoteCount($postId);
+                $comments = PostsQueries::getCommentCount($postId);
 
                 $this->postsHTML .= "
                 <div class='formdiv'>
@@ -81,11 +81,11 @@ class PostManager {
                 // if up-vote button is pressed
                 if (isset($_GET['upvote'])) {
                     $vote = $_GET['upvote'];
-                    Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
+                    PostsQueries::addVote($_SESSION['user_id'], $clickedPostId, $vote);
                 // if down-vote button is pressed
                 } elseif (isset($_GET['downvote'])) {
                     $vote = $_GET['downvote'];
-                    Posts::addVote($_SESSION['user_id'], $clickedPostId, $vote);
+                    PostsQueries::addVote($_SESSION['user_id'], $clickedPostId, $vote);
                 } else {
                     echo "Can Not Add Vote At The Moment";
                 }
