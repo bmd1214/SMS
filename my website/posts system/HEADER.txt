@@ -1,0 +1,5 @@
+5-3-2024
+Ahmad Alaradi
+
+this file has the php code for the system that shows the posts and make the users
+able to vote, also has the appropiate css for the page.
