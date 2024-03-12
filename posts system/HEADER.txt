@@ -1,0 +1,4 @@
+Ahmad Alaradi
+12/03/2024
+
+this folder has the system of handling the posts and show them in my website, with css code for the pages.
