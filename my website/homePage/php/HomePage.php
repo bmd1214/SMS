@@ -82,6 +82,7 @@ if (isset($userId)) {
         <div class="footer-bottom">
             
             <p>Contact Us : +218 917711221</p>
+            <p>             +218 917711221</p>
             <p>E-Mail : Example@gmail.com</p>
             <p>copyright &copy;2024 designed by <span>Anonymous person</span></p>
 
